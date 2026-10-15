@@ -1,0 +1,24 @@
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+ENV/
+.env
+data/*.db
+data/incidents.db
+.pytest_cache/
+.coverage
+htmlcov/
+*.log
+.DS_Store
+
+# ML artifacts and model caches
+models/
+.huggingface/
+.cache/
+*.zip
+*.onnx
+*.safetensors

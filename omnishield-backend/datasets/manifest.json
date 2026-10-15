@@ -1,0 +1,118 @@
+{
+  "project": "OmniShield AI",
+  "purpose": "Dataset sources and permitted-use notes; this manifest does not imply all third-party corpora are redistributed in this ZIP.",
+  "synthetic_demo_cases": {
+    "file": "demo_cases.jsonl",
+    "type": "synthetic smoke-test examples",
+    "training_use": false,
+    "notes": "Contains invented examples and reserved .invalid domains. Not representative enough to train or benchmark a model."
+  },
+  "datasets": [
+    {
+      "task": "SMS/scam-message classification",
+      "name": "UCI SMS Spam Collection",
+      "examples": 5574,
+      "source": "https://archive.ics.uci.edu/dataset/228/sms+spam+collection",
+      "license": "CC BY 4.0",
+      "download_command": "python scripts/download_datasets.py --sms",
+      "caveat": "Older English SMS dataset; does not represent modern multilingual UPI, crypto, delivery or business-email scams without fresh evaluation."
+    },
+    {
+      "task": "Phishing email classification",
+      "name": "zefang-liu/phishing-email-dataset",
+      "examples": 18650,
+      "source": "https://huggingface.co/datasets/zefang-liu/phishing-email-dataset",
+      "license": "LGPL-3.0 as listed on dataset card; verify source/card terms before redistribution or commercial use",
+      "download_command": "python scripts/download_datasets.py --email",
+      "caveat": "Inspect class labels, duplicates, source quality and privacy before training."
+    },
+    {
+      "task": "URL/domain classification",
+      "name": "PhiUSIIL phishing URL dataset (candidate) + licensed reputation feeds",
+      "source": "https://huggingface.co/datasets/it4lia/PhiUSIIL_cleaned",
+      "license": "Confirm licensing and commercial redistribution rights from the source before downloading",
+      "download_command": "Not automated; verify licensing before use",
+      "caveat": "Datasets can contain stale labels and source leakage. Combine temporal splits, current benign domains and reputation checks."
+    },
+    {
+      "task": "PE malware feature classification",
+      "name": "Elastic EMBER 2018 feature benchmark",
+      "source": "https://github.com/elastic/ember",
+      "license": "Review upstream repository and dataset terms before use",
+      "download_command": "python scripts/download_datasets.py --ember2018",
+      "caveat": "Large feature archive; not a bundle of executable malware. Feature extraction/version compatibility matters; do not infer coverage of PDFs, Android APKs, scripts or macros."
+    },
+    {
+      "task": "QR scams",
+      "name": "No standalone QR training corpus bundled",
+      "source": "Decoded QR payloads are analyzed through URL/email/payment risk modules",
+      "license": "Not applicable",
+      "download_command": "None",
+      "caveat": "QR is a transport/encoding format, not a single semantic label. Build a separately licensed QR image dataset only if image-level visual classification is required."
+    },
+    {
+      "task": "Prompt injection / agent input security",
+      "name": "ProtectAI DeBERTa v3 prompt-injection classifier",
+      "source": "https://huggingface.co/protectai/deberta-v3-base-prompt-injection-v2",
+      "license": "Apache-2.0 listed on model card",
+      "download_command": "python scripts/download_models.py --tasks prompt-injection",
+      "caveat": "English-focused model with known false positives and limitations; use deterministic tool permissions and human approvals regardless."
+    }
+  ],
+  "recommended_models": [
+    {
+      "task": "SMS/chat scam text classification",
+      "model_id": "omarash/sms-spam-distilbert",
+      "model_card": "https://huggingface.co/omarash/sms-spam-distilbert",
+      "model_license": "Apache-2.0 listed on model card",
+      "labels": "ham=0, spam=1 per model card",
+      "limitations": "English SMS model trained/evaluated on UCI SMS Spam Collection; small old corpus, evaluation-split selection caveat, not a production anti-fraud guarantee."
+    },
+    {
+      "task": "Email phishing classification",
+      "model_id": "dima806/phishing-email-detection",
+      "model_card": "https://huggingface.co/dima806/phishing-email-detection",
+      "model_license": "Apache-2.0 listed on model card",
+      "labels": "Inspect config.json and model card before enabling; generic labels are intentionally not guessed.",
+      "limitations": "English text classifier; this project has not independently validated its current performance. Confirm label mapping and class definition."
+    },
+    {
+      "task": "URL / phishing text classification",
+      "model_id": "ealvaradob/bert-finetuned-phishing",
+      "model_card": "https://huggingface.co/ealvaradob/bert-finetuned-phishing",
+      "model_license": "Apache-2.0 listed on model card",
+      "labels": "Inspect model config before enabling; generic labels are intentionally not guessed.",
+      "limitations": "Model card reports 97.17% accuracy on its evaluation set, but OmniShield has not independently reproduced that result. May be large/slow on CPU and may not generalize to new domains or regional scams."
+    },
+    {
+      "task": "Prompt injection / agent input classification",
+      "model_id": "protectai/deberta-v3-base-prompt-injection-v2",
+      "model_card": "https://huggingface.co/protectai/deberta-v3-base-prompt-injection-v2",
+      "model_license": "Apache-2.0 listed on model card",
+      "labels": "The model card documents class 0=benign and class 1=injection; default environment maps these to SAFE,INJECTION.",
+      "limitations": "English-focused; card says jailbreaks/non-English prompts are not handled and false positives can occur. Enforce tool permissions and human approval independently."
+    },
+    {
+      "task": "DLP person/organization/location detection",
+      "model_id": "dslim/bert-base-NER",
+      "model_card": "https://huggingface.co/dslim/bert-base-NER",
+      "model_license": "Review current model card before use.",
+      "labels": "Token-level NER tags are aggregated by the local pipeline.",
+      "limitations": "Optional and local-only. It supplements deterministic secret/PII patterns and is not a complete detector for financial secrets or all PII."
+    }
+  ],
+  "not_bundled_or_no_standalone_model": [
+    {
+      "task": "Invoice fraud",
+      "reason": "No generic pretrained model is bundled because invoice fraud depends on organization-specific vendors, bank-change patterns and labeled review outcomes. Current logic compares against a synthetic vendor register; custom model path is opt-in and must be independently trained/evaluated."
+    },
+    {
+      "task": "File malware",
+      "reason": "No universal generic deep-learning model or malware binaries are included. The API computes SHA-256 and supports ClamAV and a private inference endpoint; the latter must be supplied and secured by the operator."
+    },
+    {
+      "task": "QR scams",
+      "reason": "QR is an encoding carrier. The API decodes image payloads and analyzes embedded URLs/payment URIs; it does not claim a standalone visual neural classifier."
+    }
+  ]
+}
