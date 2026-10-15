@@ -1,0 +1,34 @@
+{
+  "vendors": [
+    {
+      "id": "v-001",
+      "name": "Acme Cloud Services",
+      "aliases": ["Acme Cloud", "Acme Services LLC"],
+      "account_number": "ACME-992144",
+      "iban": "GB82WEST12345698765432",
+      "currency": "USD",
+      "max_invoice_limit": 50000.0,
+      "trusted": true
+    },
+    {
+      "id": "v-002",
+      "name": "Global Hardware Ltd",
+      "aliases": ["Global Hardware", "GHL Supplies"],
+      "account_number": "GHL-882190",
+      "iban": "DE89370400440532013000",
+      "currency": "EUR",
+      "max_invoice_limit": 100000.0,
+      "trusted": true
+    },
+    {
+      "id": "v-003",
+      "name": "Apex Legal Partners",
+      "aliases": ["Apex Legal", "Apex LLP"],
+      "account_number": "APEX-110294",
+      "iban": "FR7630006000011234567890189",
+      "currency": "EUR",
+      "max_invoice_limit": 25000.0,
+      "trusted": true
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+# Optional dependencies for Rook-1 ML classification server
+httpx>=0.26.0
+numpy>=1.24.0
+scikit-learn>=1.3.0

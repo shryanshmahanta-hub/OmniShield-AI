@@ -1,0 +1,7 @@
+# Optional local text classifiers; PyTorch CPU works for smaller models.
+# Model files are downloaded separately with scripts/download_models.py.
+torch>=2.2.0,<3.0.0
+transformers>=4.39.3,<5.0.0
+sentencepiece>=0.1.99,<1.0.0
+safetensors>=0.4.2,<1.0.0
+huggingface-hub>=0.23.0,<1.0.0

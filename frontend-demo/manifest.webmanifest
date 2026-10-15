@@ -1,0 +1,16 @@
+{
+  "id": "/demo",
+  "name": "OmniShield AI Security Workspace",
+  "short_name": "OmniShield AI",
+  "description": "Defensive security triage workspace for phishing, data leaks, invoices, and AI-agent risks.",
+  "start_url": "/demo",
+  "scope": "/",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#080b14",
+  "theme_color": "#080b14",
+  "icons": [
+    {"src": "/icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any"},
+    {"src": "/icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any"}
+  ]
+}
